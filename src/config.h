@@ -18,7 +18,7 @@
 #define COUNTRY_CODE_DEFAULT "GB"
 #define DEFAULT_CAPTIVE_SSID "Aurigae"
 #define NTP_SERVER_DEFAULT "pool.ntp.org"
-#define MOON_SERVICE_URL "https://api.aurigae.fizban.net/api/moonphase?date=today"
+#define MOON_SERVICE_URL "https://api-aurigae.fizban.net/api/moonphase?date=today"
 // esp-web-tools manifest for the public web flasher (https://aurigae.fizban.net/flash.html);
 // polled by the webconfig page's /checkupdate endpoint to offer a firmware.bin download when
 // its "version" is newer than APP_VERSION below.
