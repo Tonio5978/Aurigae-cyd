@@ -9,3 +9,4 @@ webflasher-data
 node_modules
 package-lock.json
 compile_commands.json
+dist

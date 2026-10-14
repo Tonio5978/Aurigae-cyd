@@ -31,7 +31,7 @@ jobs:
       # header, then `pio run`) rather than run as a separate workflow step -
       # otherwise the flashed FW_VERSION string would lag one release behind
       # the tag/changelog.
-      - name: Release (bumps version.h, builds firmware, publishes)
+      - name: Release (bumps version.h, builds + packages firmware, publishes)
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,7 +5,7 @@
     "@semantic-release/release-notes-generator",
     ["@semantic-release/changelog", { "changelogTitle": "# Changelog" }],
     ["@semantic-release/exec", {
-      "prepareCmd": "sed -i.bak \"s/^#define FW_VERSION .*/#define FW_VERSION \\\"${nextRelease.version}\\\"/\" include/version.h && rm -f include/version.h.bak && pio run -e esp32-cyd"
+      "prepareCmd": "sed -i.bak \"s/^#define FW_VERSION .*/#define FW_VERSION \\\"${nextRelease.version}\\\"/\" include/version.h && rm -f include/version.h.bak && pio run -e esp32-cyd && tools/package_release.sh"
     }],
     ["@semantic-release/git", {
       "assets": ["CHANGELOG.md", "include/version.h", "package.json"],
@@ -13,7 +13,13 @@
     }],
     ["@semantic-release/github", {
       "assets": [
-        { "path": ".pio/build/esp32-cyd/firmware.bin", "name": "firmware.bin", "label": "firmware.bin" }
+        { "path": ".pio/build/esp32-cyd/firmware.bin", "name": "firmware.bin", "label": "firmware.bin (OTA update)" },
+        { "path": "dist/aurigae-factory-*.bin", "label": "Factory image (esptool, flash at 0x0)" },
+        { "path": "dist/aurigae-webflasher-*.zip", "label": "Web flasher bundle (manifest + parts)" },
+        { "path": "dist/manifest.json", "label": "manifest.json" },
+        { "path": "dist/bootloader.bin", "label": "bootloader.bin (0x1000)" },
+        { "path": "dist/partitions.bin", "label": "partitions.bin (0x8000)" },
+        { "path": "dist/boot_app0.bin", "label": "boot_app0.bin (0xe000)" }
       ]
     }]
   ]

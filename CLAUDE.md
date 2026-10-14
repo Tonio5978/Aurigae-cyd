@@ -134,8 +134,11 @@ CLAUDE.md's "Git workflow and releases"). Every merge to `main` runs
 [.github/workflows/release.yml](.github/workflows/release.yml), which picks the next version from
 Conventional Commit messages (`fix:`/`perf:` patch, `feat:` minor, `feat!:` major; `chore:`/`docs:`/`ci:`/
 `refactor:` no release), and per [.releaserc.json](.releaserc.json): seds it into `include/version.h`,
-builds `esp32-cyd`, prepends notes to [CHANGELOG.md](CHANGELOG.md) (generated — don't hand-edit), commits
-`chore(release): x.y.z [skip ci]`, tags `vX.Y.Z` and publishes a GitHub Release with `firmware.bin`.
+builds `esp32-cyd`, runs [tools/package_release.sh](tools/package_release.sh) (packs the build into
+`dist/`: loose parts + esp-web-tools `manifest.json`, `aurigae-webflasher-<ver>.zip`, merged
+`aurigae-factory-<ver>.bin` copied from pioarduino's `firmware.factory.bin` — manifest offsets hardcoded
+for `min_spiffs.csv`), prepends notes to [CHANGELOG.md](CHANGELOG.md) (generated — don't hand-edit), commits
+`chore(release): x.y.z [skip ci]`, tags `vX.Y.Z` and publishes a GitHub Release with `firmware.bin` plus everything in `dist/`.
 Only `vX.Y.Z` tags count as releases (the old `ver-2.2.0` tag is ignored). `git pull` after a release
 before branching again. The public web flasher's manifest (`FIRMWARE_MANIFEST_URL`) is still updated
 separately.
