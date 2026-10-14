@@ -113,7 +113,7 @@ one file is kept `static` inside that file instead. Key files:
       switching on WMO codes with day/night variants) live in
       [src/weather_icons.cpp](src/weather_icons.cpp), declared in weather.h.
   - [src/moonphase.h](src/moonphase.h)/[moonphase.cpp](src/moonphase.cpp)'s `fetch_and_update_moonphase()` —
-    a separate custom API (`api.aurigae.fizban.net`) returning a `phase_id` (0–7) mapped to icon + localized
+    a separate custom API (`api-aurigae.fizban.net`) returning a `phase_id` (0–7) mapped to icon + localized
     label.
   - [src/geocode.h](src/geocode.h)/[geocode.cpp](src/geocode.cpp)'s `do_geocode_query()` — Open-Meteo
     geocoding API, used by the location-search dialog.

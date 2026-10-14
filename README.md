@@ -96,7 +96,28 @@ Declared as `lib_deps` in [platformio.ini](platformio.ini) — PlatformIO fetche
 
 (`HTTPClient` is bundled with the arduino-esp32 framework itself, no separate dependency needed.)
 
-To show moonphases Aurigae connects to a service hosted on one of my server: it's free and given as-is. You can host the service on your own using this code: [https://github.com/corradoignoti/aurigae_moonphases](https://github.com/corradoignoti/aurigae_moonphases). Change in config.h the value of MOON_SERVICE_URL
+### Moon phase service
+
+> [!IMPORTANT]
+> **By default, moon phases are fetched from my own server** (`api-aurigae.fizban.net`). The service is
+> free and provided as-is, with no uptime guarantee. If you'd rather not depend on it, host your own copy.
+
+The service source code is on GitHub:
+[https://github.com/corradoignoti/aurigae_moonphases](https://github.com/corradoignoti/aurigae_moonphases)
+
+To point the firmware at your own instance, edit `MOON_SERVICE_URL` in [src/config.h](src/config.h):
+
+```c
+// default
+#define MOON_SERVICE_URL "https://api-aurigae.fizban.net/api/moonphase?date=today"
+
+// your own server
+#define MOON_SERVICE_URL "https://your-server.example.com/api/moonphase?date=today"
+```
+
+then rebuild and flash (`pio run -t upload`). Your service must answer a `GET` on that URL with HTTP 200
+and a JSON body containing a `phase_id` integer from 0 (new moon) to 7 (waning crescent), e.g.
+`{"phase_id": 4}`.
 
 ### License
 
