@@ -1,5 +1,7 @@
 #pragma once
 
+#include "version.h"
+
 // Board / display pins and geometry (specific to the ESP32-2432S028R "Cheap
 // Yellow Display" board variant).
 #define XPT2046_IRQ 36   // T_IRQ
@@ -31,4 +33,5 @@
 #define ANTIBURN_CHECK_INTERVAL 30000UL       // how often to check idle time
 #define PAGE_SLIDESHOW_INTERVAL 5000UL  // auto-cycle page every 5s when enabled
 
-#define APP_VERSION "App ver. 2.2.1"
+// FW_VERSION (include/version.h) is bumped by semantic-release on each release.
+#define APP_VERSION "App ver. " FW_VERSION
