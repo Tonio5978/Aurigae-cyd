@@ -66,7 +66,7 @@ Source layout:
   [esp-web-tools](https://esphome.github.io/esp-web-tools/) browser flasher.
 - `assets/` — source icon artwork the generated `.c` files in `src/` are derived from.
 - `docs/user-guide.md` — end-user guide (Wi-Fi setup, settings screen, web config page).
-- `changelog.md` — release notes per version.
+- `CHANGELOG.md` — release notes per version (generated on release).
 
 ### Libraries required to compile:
 

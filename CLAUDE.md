@@ -52,7 +52,10 @@ one file is kept `static` inside that file instead. Key files:
 
 - [src/aurigae.cpp](src/aurigae.cpp) — `setup()`/`loop()` and the `update_clock()` timer callback. This is
   the thin entry point; almost everything else has moved out.
-- [src/config.h](src/config.h) — pin/screen/timing `#define`s and default lat/long/location/NTP values.
+- [src/config.h](src/config.h) — pin/screen/timing `#define`s and default lat/long/location/NTP values;
+  also derives `APP_VERSION` ("App ver. x.y.z", shown on Settings/webconfig) from `FW_VERSION`.
+- [include/version.h](include/version.h) — `FW_VERSION`, the single source of the firmware version.
+  Bumped only by semantic-release (see Releases below) — never edit by hand.
 - [src/globals.h](src/globals.h) / [globals.cpp](src/globals.cpp) — cross-file shared state (see above).
 - [src/fonts.h](src/fonts.h) — `LV_FONT_DECLARE`s + `get_font_NN()` helpers.
 - [src/icons.h](src/icons.h) — `LV_IMG_DECLARE`s for every weather/moon-phase/Santa asset.
@@ -123,6 +126,19 @@ one file is kept `static` inside that file instead. Key files:
   blanks the backlight after 10 min idle; `restore_light()` un-blanks it (called on touch interactions);
   `force_wakeup` timer forces the backlight pin back on every 30 min because ESP32 deep sleep otherwise
   leaves the touchscreen unresponsive (see git history).
+
+## Releases
+
+Versioning is automated with semantic-release, same as the other repos under `esp32/` (see the parent
+CLAUDE.md's "Git workflow and releases"). Every merge to `main` runs
+[.github/workflows/release.yml](.github/workflows/release.yml), which picks the next version from
+Conventional Commit messages (`fix:`/`perf:` patch, `feat:` minor, `feat!:` major; `chore:`/`docs:`/`ci:`/
+`refactor:` no release), and per [.releaserc.json](.releaserc.json): seds it into `include/version.h`,
+builds `esp32-cyd`, prepends notes to [CHANGELOG.md](CHANGELOG.md) (generated — don't hand-edit), commits
+`chore(release): x.y.z [skip ci]`, tags `vX.Y.Z` and publishes a GitHub Release with `firmware.bin`.
+Only `vX.Y.Z` tags count as releases (the old `ver-2.2.0` tag is ignored). `git pull` after a release
+before branching again. The public web flasher's manifest (`FIRMWARE_MANIFEST_URL`) is still updated
+separately.
 
 ## Assets
 
