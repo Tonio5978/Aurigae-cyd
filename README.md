@@ -35,6 +35,20 @@ You can use the aurigae.cpp code here under the terms of the GPL 3.0 license.
 
 The icons are not included in that license. See "Thanks" below for details on the icons.
 
+### Prebuilt firmware
+
+Every [GitHub Release](https://github.com/corradoignoti/Aurigae-cyd/releases) ships ready-to-flash files:
+
+- `aurigae-factory-<version>.bin` — full image for a new/erased board, flash at offset 0:
+  ```
+  esptool.py --chip esp32 write_flash 0x0 aurigae-factory-<version>.bin
+  ```
+- `firmware.bin` — app image only, for updating an already-running device via the web config page's
+  `/update` form.
+- `aurigae-webflasher-<version>.zip` — `manifest.json` + `bootloader.bin`/`partitions.bin`/
+  `boot_app0.bin`/`firmware.bin` for an [esp-web-tools](https://esphome.github.io/esp-web-tools/) browser
+  flasher (also attached individually).
+
 ### How to compile:
 
 This is a [PlatformIO](https://platformio.org/) project built against the
@@ -62,8 +76,9 @@ Source layout:
   via `build_flags` in [platformio.ini](platformio.ini).
 - `tools/extract_unicode_chars.py` — helper to find non-ASCII characters a translation needs, for
   regenerating the LVGL fonts.
-- `tools/make_webflasher_zip.sh` — build + package firmware (manifest.json + binary parts) for the
-  [esp-web-tools](https://esphome.github.io/esp-web-tools/) browser flasher.
+- `tools/package_release.sh` — after `pio run`, packages the build into `dist/`: loose binary parts +
+  `manifest.json` and a zip of them for the [esp-web-tools](https://esphome.github.io/esp-web-tools/)
+  browser flasher, plus a merged factory image. Run automatically on every release (see "Prebuilt firmware").
 - `assets/` — source icon artwork the generated `.c` files in `src/` are derived from.
 - `docs/user-guide.md` — end-user guide (Wi-Fi setup, settings screen, web config page).
 - `CHANGELOG.md` — release notes per version (generated on release).
