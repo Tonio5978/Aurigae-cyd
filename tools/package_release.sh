@@ -44,6 +44,19 @@ if [[ ! -f "$BOOT_APP0" ]]; then
   exit 1
 fi
 
+# app0/app1 in min_spiffs.csv are 0x1E0000 (1920K) each. PlatformIO's own
+# "Flash:" check only sums ELF sections, so it misses an image that fits on
+# paper but whose padded .bin spills past the slot: the bootloader then
+# refuses to boot it and Update.begin() rejects it for OTA. Fail the release
+# instead of publishing it.
+APP_SLOT_SIZE=$((0x1E0000))
+FW_SIZE=$(wc -c < "$BUILD_DIR/firmware.bin" | tr -d ' ')
+if (( FW_SIZE > APP_SLOT_SIZE )); then
+  echo "error: firmware.bin is $FW_SIZE bytes, exceeds the $APP_SLOT_SIZE-byte app slot by $((FW_SIZE - APP_SLOT_SIZE))" >&2
+  exit 1
+fi
+echo "firmware.bin: $FW_SIZE / $APP_SLOT_SIZE bytes ($((APP_SLOT_SIZE - FW_SIZE)) free)"
+
 VERSION="$(sed -n 's/^#define FW_VERSION "\([^"]*\)".*/\1/p' include/version.h)"
 if [[ -z "$VERSION" ]]; then
   echo "error: couldn't parse FW_VERSION out of include/version.h" >&2
