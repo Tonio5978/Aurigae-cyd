@@ -2,8 +2,12 @@
 # Package an already-built esp32-cyd firmware into every downloadable a
 # GitHub Release publishes (see .releaserc.json), all written to dist/:
 #
-#   bootloader.bin, partitions.bin, boot_app0.bin, firmware.bin
-#       loose parts, flashable individually with esptool or esp-web-tools
+#   bootloader.bin, partitions.bin, boot_app0.bin, firmware-<version>.bin
+#       loose parts, flashable individually with esptool or esp-web-tools.
+#       The app image carries the version in its name so a web flasher host
+#       never pairs a fresh manifest.json with a stale, cached firmware.bin
+#       (that's how 2.2.3's web flasher ended up writing 2.2.2's oversized
+#       image: same URL, 4h cache)
 #   manifest.json
 #       esp-web-tools manifest pointing at those parts (same format as the
 #       one FIRMWARE_MANIFEST_URL serves, which /checkupdate parses)
@@ -66,7 +70,10 @@ fi
 rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
-cp "$BUILD_DIR/bootloader.bin" "$BUILD_DIR/partitions.bin" "$BUILD_DIR/firmware.bin" "$OUT_DIR/"
+FW_NAME="firmware-$VERSION.bin"
+
+cp "$BUILD_DIR/bootloader.bin" "$BUILD_DIR/partitions.bin" "$OUT_DIR/"
+cp "$BUILD_DIR/firmware.bin" "$OUT_DIR/$FW_NAME"
 cp "$BOOT_APP0" "$OUT_DIR/"
 
 # Offsets match this project's partition table (min_spiffs.csv) and the ESP32
@@ -85,7 +92,7 @@ cat > "$OUT_DIR/manifest.json" <<EOF
         { "path": "bootloader.bin", "offset": 4096 },
         { "path": "partitions.bin", "offset": 32768 },
         { "path": "boot_app0.bin", "offset": 57344 },
-        { "path": "firmware.bin", "offset": 65536 }
+        { "path": "$FW_NAME", "offset": 65536 }
       ]
     }
   ]
@@ -93,7 +100,7 @@ cat > "$OUT_DIR/manifest.json" <<EOF
 EOF
 
 (cd "$OUT_DIR" && zip -q -X "aurigae-webflasher-$VERSION.zip" \
-  manifest.json bootloader.bin partitions.bin boot_app0.bin firmware.bin)
+  manifest.json bootloader.bin partitions.bin boot_app0.bin "$FW_NAME")
 
 # pioarduino already merges bootloader/partitions/boot_app0/app into
 # firmware.factory.bin at the offsets above (byte-identical to an esptool

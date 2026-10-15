@@ -13,7 +13,7 @@
     }],
     ["@semantic-release/github", {
       "assets": [
-        { "path": ".pio/build/esp32-cyd/firmware.bin", "name": "firmware.bin", "label": "firmware.bin (OTA update)" },
+        { "path": "dist/firmware-*.bin", "label": "App image (OTA update via web config, flash at 0x10000)" },
         { "path": "dist/aurigae-factory-*.bin", "label": "Factory image (esptool, flash at 0x0)" },
         { "path": "dist/aurigae-webflasher-*.zip", "label": "Web flasher bundle (manifest + parts)" },
         { "path": "dist/manifest.json", "label": "manifest.json" },
