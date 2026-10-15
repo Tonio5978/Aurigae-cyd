@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.4](https://github.com/corradoignoti/Aurigae-cyd/compare/v2.2.3...v2.2.4) (2026-10-15)
+
+
+### Bug Fixes
+
+* **release:** give the app image a versioned filename ([6a0adae](https://github.com/corradoignoti/Aurigae-cyd/commit/6a0adae12e44c192683af62ab08e6747be1baa9f))
+
 ## [2.2.3](https://github.com/corradoignoti/Aurigae-cyd/compare/v2.2.2...v2.2.3) (2026-10-15)
 
 
