@@ -91,7 +91,7 @@ one file is kept `static` inside that file instead. Key files:
   `FIRMWARE_MANIFEST_URL` (config.h — the esp-web-tools manifest behind the public web flasher at
   aurigae.fizban.net/flash.html) and, if its `version` is newer than `APP_VERSION`
   (`version_is_newer()` in util.h/cpp), the root page shows a banner linking straight to the
-  matching `firmware.bin`.
+  matching `firmware-<version>.bin` (whatever path the manifest's 0x10000 part names).
 - **Wi-Fi provisioning**: `WiFiManager` auto-connects to saved credentials or falls back to a captive AP named
   by `DEFAULT_CAPTIVE_SSID` ("Aurigae"); [src/wifi_provisioning.h](src/wifi_provisioning.h)/
   [wifi_provisioning.cpp](src/wifi_provisioning.cpp)'s `apModeCallback()` shows a splash screen while in AP
@@ -138,7 +138,8 @@ builds `esp32-cyd`, runs [tools/package_release.sh](tools/package_release.sh) (p
 `dist/`: loose parts + esp-web-tools `manifest.json`, `aurigae-webflasher-<ver>.zip`, merged
 `aurigae-factory-<ver>.bin` copied from pioarduino's `firmware.factory.bin` — manifest offsets hardcoded
 for `min_spiffs.csv`), prepends notes to [CHANGELOG.md](CHANGELOG.md) (generated — don't hand-edit), commits
-`chore(release): x.y.z [skip ci]`, tags `vX.Y.Z` and publishes a GitHub Release with `firmware.bin` plus everything in `dist/`.
+`chore(release): x.y.z [skip ci]`, tags `vX.Y.Z` and publishes a GitHub Release with everything in `dist/`. The app image is `firmware-<version>.bin` (never a
+fixed `firmware.bin`) so a cached old binary on the web flasher host can't be paired with a newer manifest.
 Only `vX.Y.Z` tags count as releases (the old `ver-2.2.0` tag is ignored). `git pull` after a release
 before branching again. The public web flasher's manifest (`FIRMWARE_MANIFEST_URL`) is still updated
 separately.

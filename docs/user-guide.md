@@ -80,7 +80,7 @@ temperature unit, auto-cycle, and idle timeout apply without reboot.
 ### OTA firmware update
 
 Web config page root also show firmware status: up-to-date, update-available (with download link for
-`firmware.bin`), or check-failed. To update: download `firmware.bin`, then upload it via the form on
+`firmware-<version>.bin`), or check-failed. To update: download that file, then upload it via the form on
 same page — device flash it and reboot into new version. Failed upload/verify leave running firmware
 untouched.
 

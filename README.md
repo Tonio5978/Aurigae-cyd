@@ -27,7 +27,7 @@ Saving reboot device to apply.
 Page also has OTA firmware update: `/update` endpoint accept upload of built `.bin`, device flash
 and reboot into it (unauthenticated — anyone on LAN can flash it). Page checks
 aurigae.fizban.net for newer published firmware and shows update banner with direct
-firmware.bin link when found.
+firmware-<version>.bin link when found.
 
 ### License
 
@@ -43,10 +43,10 @@ Every [GitHub Release](https://github.com/corradoignoti/Aurigae-cyd/releases) sh
   ```
   esptool.py --chip esp32 write_flash 0x0 aurigae-factory-<version>.bin
   ```
-- `firmware.bin` — app image only, for updating an already-running device via the web config page's
+- `firmware-<version>.bin` — app image only, for updating an already-running device via the web config page's
   `/update` form.
 - `aurigae-webflasher-<version>.zip` — `manifest.json` + `bootloader.bin`/`partitions.bin`/
-  `boot_app0.bin`/`firmware.bin` for an [esp-web-tools](https://esphome.github.io/esp-web-tools/) browser
+  `boot_app0.bin`/`firmware-<version>.bin` for an [esp-web-tools](https://esphome.github.io/esp-web-tools/) browser
   flasher (also attached individually).
 
 ### How to compile:
