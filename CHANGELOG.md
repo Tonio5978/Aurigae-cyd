@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/corradoignoti/Aurigae-cyd/compare/v2.2.2...v2.2.3) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ci:** pin pioarduino platform and guard firmware size against app slot ([843a130](https://github.com/corradoignoti/Aurigae-cyd/commit/843a1305dfdda179aac90910a15e26e5653239d0))
+
 ## [2.2.2](https://github.com/corradoignoti/Aurigae-cyd/compare/v2.2.1...v2.2.2) (2026-10-14)
 
 
